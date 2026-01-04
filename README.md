@@ -1,6 +1,6 @@
 # Chatterbox TTS Wellness Worker
 
-[![RunPod](https://api.runpod.io/badge/profzeller/chatterbox-wellness-worker)](https://runpod.io/console/hub/profzeller/chatterbox-wellness-worker)
+[![RunPod](https://api.runpod.io/badge/profzeller/chatterbox-wellness-worker)](https://console.runpod.io/hub/profzeller/chatterbox-wellness-worker)
 
 RunPod Serverless worker for Chatterbox Text-to-Speech with voice cloning.
 
