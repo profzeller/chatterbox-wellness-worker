@@ -17,19 +17,25 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Install Chatterbox TTS (--no-deps to avoid PyTorch conflicts with base image)
+# Install Chatterbox TTS without deps to avoid PyTorch version conflicts
 RUN pip install --no-cache-dir --no-deps chatterbox-tts
 
-# Install additional dependencies that chatterbox needs
+# Install chatterbox dependencies (from reference: github.com/geronimi73/runpod_chatterbox)
+# These are installed without version pins to work with the base image's PyTorch
 RUN pip install --no-cache-dir \
-    soundfile \
-    scipy \
+    conformer \
+    s3tokenizer \
     librosa \
-    einops \
+    resemble-perth \
+    huggingface_hub \
+    safetensors \
     transformers \
     diffusers \
-    safetensors \
-    huggingface_hub
+    einops \
+    soundfile \
+    scipy \
+    omegaconf \
+    pyloudnorm
 
 # Install RunPod SDK
 RUN pip install --no-cache-dir runpod
@@ -37,7 +43,7 @@ RUN pip install --no-cache-dir runpod
 # Copy handler
 COPY handler.py /app/handler.py
 
-# Pre-download model during build (use cuda since this image has GPU support during build)
+# Pre-download model during build
 RUN python -c "from chatterbox.tts import ChatterboxTTS; print('Downloading Chatterbox model...'); model = ChatterboxTTS.from_pretrained(device='cpu'); print('Model downloaded successfully')"
 
 # Start handler
